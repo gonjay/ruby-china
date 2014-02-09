@@ -187,6 +187,14 @@ module RubyChina
       end
     end
 
+    resource :notifications do
+      get do
+        authenticate!
+        @notifications = current_user.notifications.recent.paginate(:page => params[:page], :per_page => params[:per_page] || 30)
+        present @notifications, :with => APIEntities::Notification
+      end
+    end
+
     resource :photos do
       post do
         authenticate!

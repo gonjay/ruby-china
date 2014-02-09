@@ -57,5 +57,16 @@ module RubyChina
       expose :id, :name, :topics_count, :summary, :section_id, :sort
       expose(:section_name) {|model, opts| model.section.try(:name) }
     end
+
+    class Mentionable < Grape::Entity
+      expose :body, :body_html, :created_at
+      expose :user, :using => APIEntities::User
+    end
+
+    class Notification < Grape::Entity
+      expose :id, :created_at, :mentionable_type, :read#, :mentionable
+      expose :mentionable, :using => APIEntities::Mentionable
+    end
+
   end
 end
